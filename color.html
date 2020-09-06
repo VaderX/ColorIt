@@ -5,14 +5,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(onload).ready(function(){
-    var color = "#fff";
     $(document).ready(function(){
-        
+        $('#selected_color').css("background-color", color);
+        $(document).ready(function(){
+        for(let j=0; j<18; j++){
+        $("#"+j).click(function(){
+            color = colors[j];
+            $('#selected_color').css("background-color", color);
+            
+        });
+        }
+    });
     });
 });
 
 var elements = ["#circle", "#square", '#rectangle', "#arc", "#text", "#eraser"]
 $(document).ready(function(){
+    $("#selected_color").click(function(){
+        color = "#fff";
+        $('#selected_color').css("background-color", color);
+    });
     for(let j=0; j<6; j++){
         $(elements[j]).click(function(){
         for(var i=0; i<6; i++){
@@ -117,13 +129,14 @@ $(document).ready(function(){
 <div id="toolbar">
     <script>
     var i;
+    var color = "#fff";
     var shape = '';
     var text = "";
 
-    color = ['#36b336', '#81b336', '#4dff4d', '#b8ff4d', '#ffff4d', '#ffc14d', '#ea9a62','#ff944d','#ff4d4d',
+    colors = ['#36b336', '#81b336', '#4dff4d', '#b8ff4d', '#ffff4d', '#ffc14d', '#ea9a62','#ff944d','#ff4d4d',
              '#b33636', '#ff4dff', '#a862ea', '#bf62ea', '#4d4dff', '#3655b3', '#0000ff', '#002db3', '#4dffff']
     for (i = 0; i < 18; i++) {
-        text+= '<div id="'+i+'" class = "colortab" style="background-color:'+color[i]+';"></div>'
+        text+= '<div id="'+i+'" class = "colortab" style="background-color:'+colors[i]+';"></div>'
         }
 
     // Implemented coordinates detection....
@@ -167,6 +180,9 @@ $(document).ready(function(){
         var ctx = canvas.getContext("2d");
         ctx.beginPath();
         ctx.arc(x, y, 50, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
         ctx.stroke();
     }
     function rectangle(x, y){
@@ -174,6 +190,8 @@ $(document).ready(function(){
         var ctx = c.getContext("2d");
         ctx.beginPath();
         ctx.rect(x, y, 100, 60);
+        ctx.fillStyle = color;
+        ctx.fill();
         ctx.stroke();
     }
     function square(x, y){
@@ -181,6 +199,8 @@ $(document).ready(function(){
         var ctx = c.getContext("2d");
         ctx.beginPath();
         ctx.rect(x, y, 80, 80);
+        ctx.fillStyle = color;
+        ctx.fill();
         ctx.stroke();
     }
     function arc(x, y){
